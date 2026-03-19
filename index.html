@@ -1,40 +1,32 @@
-<body><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sticky Notes App</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sticky Notes App</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
+<body>
+  <div id="welcomeScreen" class="welcome">
+    <div class="welcome-card">
+      <div class="welcome-badge">WELCOME</div>
+      <h1>Sticky Notes App</h1>
+      <p>Capture ideas fast. Organize visually. Keep it simple.</p>
+      <button id="enterBtn" class="primary-btn" type="button">Enter Board</button>
+      <div class="welcome-footer">Tip: Use the color picker to set your next note color.</div>
+    </div>
+  </div>
 
+  <div id="app" class="app hidden">
+    <div class="controls">
+      <button id="addBtn" type="button">+ Add Note</button>
+      <input type="color" id="colorPicker" value="#ffd966" />
+      <button id="zoomInBtn" type="button">Zoom +</button>
+      <button id="zoomOutBtn" type="button">Zoom -</button>
+    </div>
+    <div id="board"></div>
+  </div>
 
-<header>
-<h1>Sticky Notes App</h1>
-</header>
-
-<main class="board">
-
-<div class="column">
-<h2>To Do</h2>
-<div class="note">Create UI design</div>
-<div class="note">Set up backend</div>
-</div>
-
-<div class="column">
-<h2>In Progress</h2>
-<div class="note">Working on Socket.io</div>
-</div>
-
-<div class="column">
-<h2>Done</h2>
-<div class="note">Project idea created</div>
-</div>
-
-</main>
-
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
