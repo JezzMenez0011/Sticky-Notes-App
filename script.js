@@ -1,15 +1,13 @@
-const welcomeScreen = document.getElementById("welcomeScreen");
-const app = document.getElementById("app");
-const enterBtn = document.getElementById("enterBtn");
-
-const board = document.getElementById("board");
-const colorPicker = document.getElementById("colorPicker");
-
 let zoom = 1;
 
+function clamp(n, min, max) {
+  return Math.min(max, Math.max(min, n));
+}
+
 function setZoom(value) {
-  zoom = Math.max(0.4, Math.min(2.5, value));
-  board.style.transform = `scale(${zoom})`;
+  zoom = clamp(value, 0.4, 2.5);
+  const board = document.getElementById("board");
+  if (board) board.style.transform = `scale(${zoom})`;
 }
 
 function zoomIn() {
@@ -21,6 +19,10 @@ function zoomOut() {
 }
 
 function enterBoard() {
+  const welcomeScreen = document.getElementById("welcomeScreen");
+  const app = document.getElementById("app");
+  if (!welcomeScreen || !app) return;
+
   welcomeScreen.classList.add("fade-out");
   setTimeout(() => {
     welcomeScreen.style.display = "none";
@@ -28,16 +30,16 @@ function enterBoard() {
   }, 420);
 }
 
-if (enterBtn) {
-  enterBtn.addEventListener("click", enterBoard);
-}
-
 function addNote() {
+  const board = document.getElementById("board");
+  const colorPicker = document.getElementById("colorPicker");
+  if (!board) return;
+
   const note = document.createElement("div");
   note.className = "note";
   note.style.background = colorPicker ? colorPicker.value : "#fff7cc";
-  note.style.left = "60px";
-  note.style.top = "90px";
+  note.style.left = "20px";
+  note.style.top = "80px";
   note.style.zIndex = String(Date.now());
 
   const del = document.createElement("button");
@@ -69,9 +71,8 @@ function makeDraggable(note) {
   let startTop = 0;
 
   note.addEventListener("mousedown", (e) => {
-    if (e.target && (e.target.tagName === "TEXTAREA" || e.target.classList.contains("delete-btn"))) {
-      return;
-    }
+    const target = e.target;
+    if (target && (target.tagName === "TEXTAREA" || target.classList.contains("delete-btn"))) return;
 
     dragging = true;
     note.style.cursor = "grabbing";
@@ -102,6 +103,21 @@ function makeDraggable(note) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const enterBtn = document.getElementById("enterBtn");
+  const addBtn = document.getElementById("addBtn");
+  const zoomInBtn = document.getElementById("zoomInBtn");
+  const zoomOutBtn = document.getElementById("zoomOutBtn");
+
+  if (enterBtn) enterBtn.addEventListener("click", enterBoard);
+  if (addBtn) addBtn.addEventListener("click", addNote);
+  if (zoomInBtn) zoomInBtn.addEventListener("click", zoomIn);
+  if (zoomOutBtn) zoomOutBtn.addEventListener("click", zoomOut);
+
+  setZoom(1);
+});
+
 window.addNote = addNote;
 window.zoomIn = zoomIn;
 window.zoomOut = zoomOut;
+window.enterBoard = enterBoard;
